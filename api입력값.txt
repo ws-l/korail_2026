@@ -1,0 +1,111 @@
+개인정보보호정책에는 다음 주소를 넣으세요.
+	https://serpapi.com/legal
+
+아래 내용을 복사해서 붙여넣으세요.
+
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "SerpAPI Google Maps Search",
+    "description": "SerpAPI를 이용한 Google Maps 장소 검색 API.",
+    "version": "v1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://serpapi.com"
+    }
+  ],
+  "paths": {
+    "/search": {
+      "get": {
+        "description": "Google Maps에서 특정 위치와 검색어를 기반으로 장소 정보를 검색합니다.",
+        "operationId": "googleMapsSearch",
+        "parameters": [
+          {
+            "name": "engine",
+            "in": "query",
+            "description": "사용할 검색 엔진 (google_maps)",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["google_maps"]
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "description": "검색어 (예: Coffee)",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ll",
+            "in": "query",
+            "description": "위치 정보 (latitude,longitude,zoom 형식의 문자열)",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "@40.7455096,-74.0083012,14z"
+            }
+          },
+          {
+            "name": "api_key",
+            "in": "query",
+            "description": "API 키",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "89a23803c8a8eb0e5fb3bc00eb90039ccd042fd72c71806a0d62aae556a3c16c"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "성공적으로 Google Maps 검색 결과를 반환합니다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "local_results": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "title": { "type": "string" },
+                          "address": { "type": "string" },
+                          "rating": { "type": "number" },
+                          "reviews": { "type": "integer" },
+                          "place_id": { "type": "string" }
+                        },
+                        "additionalProperties": true
+                      }
+                    }
+                  },
+                  "required": ["local_results"],
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "잘못된 요청입니다."
+          },
+          "401": {
+            "description": "인증에 실패했습니다. 올바른 API 키를 제공하세요."
+          },
+          "500": {
+            "description": "서버 오류가 발생했습니다."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {}
+  }
+}
